@@ -163,57 +163,6 @@ class MaxRectBinPack {
       result.push(bestNode);
     }
     return result;
-
-    // const result = [];
-    // while (rects.length > 0) {
-    //   const bestScore1: IScoreCounter = {
-    //     value: Infinity,
-    //   };
-    //   const bestScore2: IScoreCounter = {
-    //     value: Infinity,
-    //   };
-    //   let bestRectangleIndex = -1;
-    //   let bestNode = new Rect();
-
-    //   for (let i = 0; i < rects.length; i++) {
-    //     const currentRect = rects[i];
-    //     const score1 = {
-    //       value: 0,
-    //     };
-    //     const score2 = {
-    //       value: 0,
-    //     };
-    //     const newNode = this.scoreRectangle(
-    //       currentRect.width,
-    //       currentRect.height,
-    //       method,
-    //       score1,
-    //       score2,
-    //     );
-
-    //     if (
-    //       score1.value < bestScore1.value ||
-    //       (score1.value === bestScore1.value && score2.value < bestScore2.value)
-    //     ) {
-    //       bestScore1.value = score1.value;
-    //       bestScore2.value = score2.value;
-    //       bestNode = newNode;
-    //       bestRectangleIndex = i;
-    //     }
-    //   }
-
-    //   if (bestRectangleIndex === -1) {
-    //     return result;
-    //   }
-
-    //   this.placeRectangle(bestNode);
-    //   const rect = rects.splice(bestRectangleIndex, 1)[0];
-    //   rect.x = bestNode.x;
-    //   rect.y = bestNode.y;
-
-    //   result.push(rect);
-    // }
-    // return result;
   }
   /**
    *

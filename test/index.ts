@@ -19,7 +19,6 @@ const packer = new MaxRectBinPack(width, height, true);
 // for (const rect of rects) {
 //   result.push(packer.insert(rect.width, rect.height, FindPosition.AreaFit));
 // }
-debugger;
 const result = packer.insertRects(rects, FindPosition.AreaFit);
 
 fs.writeFileSync(
