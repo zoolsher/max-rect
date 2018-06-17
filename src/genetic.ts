@@ -75,7 +75,6 @@ export class Genetic {
   }
   private work() {
     while (this.lifeTimes--) {
-      console.log('life');
       const generation: ICalResult[] = [];
       for (const dot of this.randomDots) {
         // 生活
@@ -91,9 +90,7 @@ export class Genetic {
       // 淘汰
       generation.sort((geneticA, geneticB) => {
         if (geneticB.fitAll && geneticA.fitAll) {
-          return (
-            geneticB.occupancy - geneticA.occupancy
-          );
+          return geneticB.occupancy - geneticA.occupancy;
         } else if (geneticB.fitAll) {
           return 1;
         } else if (geneticA.fitAll) {
@@ -139,11 +136,26 @@ export class Genetic {
             const endPoint = generation[j].dot;
             const detX = (endPoint.x - startPoint.x) / (childNumber + 1);
             const detY = (endPoint.y - startPoint.y) / (childNumber + 1);
-            this.randomDots.push({
-              x: startPoint.x + detX,
-              y: startPoint.y + detY,
-            });
+            for (
+              let x = startPoint.x, y = startPoint.y;
+              x < endPoint.x;
+              x += detX, y += detY
+            ) {
+              this.randomDots.push({
+                x,
+                y,
+              });
+            }
           }
+        }
+        // 基因突变
+        for (let i = 0; i < 20; i++) {
+          const randomHeight = this.maxHeight * Math.random() + this.minHeight;
+          const randomWidth = this.maxWidth * Math.random() + this.minWidth;
+          this.randomDots.push({
+            x: randomWidth,
+            y: randomHeight,
+          });
         }
       }
     }

@@ -8,16 +8,17 @@ const rects: Rect[] = [];
 for (let i = 0; i < 10; i++) {
   const rect = new Rect();
   rect.height = (i + 1) * 10;
-  rect.width = 20;
+  rect.width = (i + 1.1) * 20;
   rects.push(rect);
 }
 const bestNode = genetic(rects, {
-  findPosition: FindPosition.ShortSideFit,
-  lifeTimes: 10,
+  findPosition: FindPosition.AreaFit,
+  lifeTimes: 20,
   liveRate: 0.5,
-  size: 20,
+  size: 250,
 });
 console.log(JSON.stringify(bestNode));
+console.log(bestNode.x * bestNode.y);
 const width = bestNode.x; //Math.sqrt(size);
 const height = bestNode.y; //size / width;
 
@@ -27,7 +28,7 @@ const packer = new MaxRectBinPack(width, height, true);
 //   result.push(packer.insert(rect.width, rect.height, FindPosition.AreaFit));
 // }
 let rectslength = rects.length;
-const result = packer.insertRects(rects, FindPosition.ShortSideFit);
+const result = packer.insertRects(rects, FindPosition.AreaFit);
 console.log(result.length === rectslength);
 fs.writeFileSync(
   path.join(__dirname, 'data.js'),
