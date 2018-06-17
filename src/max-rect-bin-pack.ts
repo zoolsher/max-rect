@@ -164,6 +164,13 @@ class MaxRectBinPack {
     }
     return result;
   }
+  public occupancy(): number {
+    let usedSurfaceArea = 0;
+    for (const rect of this.usedRects) {
+      usedSurfaceArea += rect.width * rect.height;
+    }
+    return usedSurfaceArea / (this.containerWidth * this.containerHeight);
+  }
   /**
    *
    * @param node
@@ -242,13 +249,6 @@ class MaxRectBinPack {
     }
 
     return newNode;
-  }
-  private occupancy(): number {
-    let usedSurfaceArea = 0;
-    for (const rect of this.usedRects) {
-      usedSurfaceArea += rect.width * rect.height;
-    }
-    return usedSurfaceArea / (this.containerWidth * this.containerHeight);
   }
   private findPositionForNewNodeBottomLeft(
     width: number,
