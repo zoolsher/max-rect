@@ -125,27 +125,21 @@ export class Genetic {
         }
       } else {
         // 非随机交配
-        let childNumber = Math.ceil(
-          (this.size * 2) / (generation.length * (generation.length - 1)),
-        );
-        childNumber = childNumber === 0 ? 1 : childNumber;
         for (let i = 0; i < generation.length; i++) {
           this.randomDots.push(generation[i].dot);
           for (let j = i + 1; j < generation.length; j++) {
             const startPoint = generation[i].dot;
             const endPoint = generation[j].dot;
-            const detX = (endPoint.x - startPoint.x) / (childNumber + 1);
-            const detY = (endPoint.y - startPoint.y) / (childNumber + 1);
-            for (
-              let x = startPoint.x, y = startPoint.y;
-              x < endPoint.x;
-              x += detX, y += detY
-            ) {
-              this.randomDots.push({
-                x,
-                y,
-              });
-            }
+            const [sonX, daughterX] = this.cross(startPoint.x, endPoint.x);
+            const [sonY, daughterY] = this.cross(startPoint.y, endPoint.y);
+            this.randomDots.push({
+              x: sonX,
+              y: sonY,
+            });
+            this.randomDots.push({
+              x: daughterX,
+              y: daughterY,
+            });
           }
         }
         // 基因突变
@@ -165,6 +159,30 @@ export class Genetic {
   }
   private getRects(): Rect[] {
     return this.rects.map(i => i.clone()); // tslint:disable-line arrow-parens
+  }
+  private cross(x: number, y: number) {
+    const lerp = (a: number, b: number) => {
+      return a + (b - a);
+    };
+    const formX = parseInt(x * 100 + '', 10);
+    const formY = parseInt(y * 100 + '', 10);
+    const binX = formX
+      .toString(2)
+      .split('')
+      .map($ => parseInt($, 10)); // tslint:disable-line
+    const binY = formY
+      .toString(2)
+      .split('')
+      .map($ => parseInt($, 10)); // tslint:disable-line
+
+    const son = [].concat(binX);
+    const daughter = [].concat(binY);
+    const i = Math.floor(Math.random() * binY.length);
+    son[i] = lerp(binX[i], binY[i]);
+    daughter[i] = lerp(binY[i], binX[i]);
+    const sonvalue = parseInt(son.join(''), 2) / 100;
+    const daughtervalue = parseInt(daughter.join(''), 2) / 100;
+    return [sonvalue, daughtervalue];
   }
 }
 

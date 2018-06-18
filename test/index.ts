@@ -13,9 +13,9 @@ for (let i = 0; i < 10; i++) {
 }
 const bestNode = genetic(rects, {
   findPosition: FindPosition.AreaFit,
-  lifeTimes: 20,
+  lifeTimes: 50,
   liveRate: 0.5,
-  size: 250,
+  size: 50,
 });
 console.log(JSON.stringify(bestNode));
 console.log(bestNode.x * bestNode.y);
